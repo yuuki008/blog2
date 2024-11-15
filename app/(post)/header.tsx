@@ -38,11 +38,11 @@ export function Header({ posts }: { posts: Post[] }) {
           <span className="hidden md:inline">
             <span>
               <a
-                href="https://twitter.com/rauchg"
+                href="https://x.com/nomu487495"
                 className="hover:text-gray-800 dark:hover:text-gray-400"
                 target="_blank"
               >
-                @rauchg
+                @nomu487495
               </a>
             </span>
 
