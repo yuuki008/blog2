@@ -17,6 +17,7 @@ import { Callout } from "app/(post)/components/callout";
 import { YouTube } from "app/(post)/components/youtube";
 import { Ref, FootNotes, FootNote } from "app/(post)/components/footnotes";
 import { Blockquote as blockquote } from "app/(post)/components/blockquote";
+import { Table, Thead, Tbody, Th, Td } from "app/(post)/components/table";
 
 export function useMDXComponents(components: {
   [component: string]: React.ComponentType;
@@ -46,5 +47,10 @@ export function useMDXComponents(components: {
     Ref,
     FootNotes,
     FootNote,
+    Table,
+    Thead,
+    Tbody,
+    Th,
+    Td,
   };
 }
