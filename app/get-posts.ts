@@ -1,4 +1,4 @@
-import postsData from "./posts.json";
+import { posts as postsData } from "./posts.json";
 import redis from "./redis";
 import commaNumber from "comma-number";
 
@@ -17,7 +17,9 @@ type Views = {
 
 export const getPosts = async () => {
   const allViews: null | Views = await redis.hgetall("views");
-  const posts = postsData.posts.map((post): Post => {
+  console.log(getPosts);
+  console.log(postsData);
+  const posts = postsData.map((post): Post => {
     const views = Number(allViews?.[post.id] ?? 0);
     return {
       ...post,
@@ -25,5 +27,6 @@ export const getPosts = async () => {
       viewsFormatted: commaNumber(views),
     };
   });
+
   return posts;
 };

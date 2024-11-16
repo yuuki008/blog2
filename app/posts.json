@@ -2,8 +2,15 @@
   "posts": [
     {
       "id": "engineering",
-      "date": "Novembar 15, 2024",
-      "title": "1 人で開発すること"
+      "date": "2024-11-15",
+      "title": "1 人で開発すること",
+      "tags": ["engineering"]
+    },
+    {
+      "id": "postgres-upsert",
+      "date": "2024-11-14",
+      "title": "PostgreSQL で UPSERT",
+      "tags": ["engineering, postgres"]
     }
   ]
 }

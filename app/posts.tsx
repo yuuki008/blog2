@@ -107,7 +107,7 @@ function List({ posts, sort }) {
                 </span>
               )}
             </td>
-            <td className="p-3">
+            <td className="p-2">
               <Link href={href} className="dark:text-gray-100 line-clamp-1">
                 {post.title}
               </Link>
