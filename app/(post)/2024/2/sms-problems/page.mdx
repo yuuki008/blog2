@@ -1,3 +1,5 @@
+import SmsThreadImage from './01.png'
+
 ショート・メッセージ・サービス（SMS）は、携帯電話との間で短いメッセージを送受信する機能です。メッセージの送信は、受信者の電話番号宛に行われます。
 
 この SMS 上で起こるフィッシング詐欺 (スミッシング） は増え続けています。
@@ -21,7 +23,7 @@ https://internet.watch.impress.co.jp/docs/news/1191600.html
 私の環境で試しに [Twilio](https://www.twilio.com/en-us) を使い、 Slack を偽装してメッセージを送信してみました。
 以下のように送信元が　 Slack 　のスレッドの中に私の偽装したメッセージが表示されているのが確認できます。
 
-![](https://storage.googleapis.com/zenn-user-upload/33820043a639-20240205.png)
+<img className="mx-auto my-10" src={SmsThreadImage.src} alt="SMS Thread" />
 
 ## 送信者側の対策
 
@@ -30,8 +32,8 @@ SMS の送信元の設定は、慎重な検討をお勧めします。
 
 ## 参考
 
-https://internet.watch.impress.co.jp/docs/news/1191600.html
-https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%A7%E3%83%BC%E3%83%88%E3%83%A1%E3%83%83%E3%82%BB%E3%83%BC%E3%82%B8%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9#cite_ref-10
-https://srad.jp/comment/3645941
-https://akaki.io/2019/sms_spoofing
+- [NTTドコモかたる不審なSMSに注意、公式SMSと同じスレッドに表示される可能性](https://internet.watch.impress.co.jp/docs/news/1191600.html)
+- [ショートメッセージサービス - Wikipedia](https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%A7%E3%83%BC%E3%83%88%E3%83%A1%E3%83%83%E3%82%BB%E3%83%BC%E3%82%B8%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9#cite_ref-10)
+- [Alphanumeric Sender ID と違って発信元電話番号は詐称不可](https://srad.jp/comment/3645941)
+- [SMSで送信元を偽装したメッセージを送る](https://akaki.io/2019/sms_spoofing)
 
