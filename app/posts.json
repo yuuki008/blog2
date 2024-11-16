@@ -19,6 +19,12 @@
       "tags": ["jest", "javascript"]
     },
     {
+      "id": "how-world-class-engineers-think",
+      "date": "2024-02-02",
+      "title": "世界一流エンジニアの思考法",
+      "tags": ["thoughts"]
+    },
+    {
       "id": "sms-problems",
       "date": "2024-02-01",
       "title": "SMS の恐ろしい仕様",
