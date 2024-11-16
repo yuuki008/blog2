@@ -4,13 +4,25 @@
       "id": "engineering",
       "date": "2024-11-15",
       "title": "1 人で開発すること",
-      "tags": ["engineering"]
+      "tags": ["thoughts"]
     },
     {
       "id": "postgres-upsert",
       "date": "2024-11-14",
       "title": "PostgreSQL で UPSERT",
-      "tags": ["engineering, postgres"]
+      "tags": ["postgres", "sql"]
+    },
+    {
+      "id": "jest-mock-method",
+      "date": "2024-10-10",
+      "title": "Jestの mockClear, mockReset, mockRestore の使い分け",
+      "tags": ["jest", "javascript"]
+    },
+    {
+      "id": "sms-problems",
+      "date": "2024-02-01",
+      "title": "SMS の恐ろしい仕様",
+      "tags": ["sms"]
     }
   ]
 }

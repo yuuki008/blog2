@@ -1,0 +1,68 @@
+## 1. 結論
+
+<Table>
+  <Thead>
+    <Th>メソッド</Th><Th>呼び出し履歴のクリア</Th><Th>実装/戻り値のリセット</Th><Th>オリジナルの実装に戻す</Th><Th>主な用途</Th>
+  </Thead>
+  <Tbody>
+    <tr>
+      <Td><code>mockClear</code></Td><Td>✅</Td><Td>❌</Td><Td>❌</Td><Td>呼び出し履歴のみをリセット</Td>
+    </tr>
+    <tr>
+      <Td><code>mockReset</code></Td><Td>✅</Td><Td>✅</Td><Td>❌</Td><Td>実装や戻り値も含めて完全にリセット</Td>
+    </tr>
+    <tr>
+      <Td><code>mockRestore</code></Td><Td>✅（スパイのみ）</Td><Td>✅（スパイのみ）</Td><Td>✅（スパイのみ）</Td><Td>元の実装に戻し、テスト終了後に元に戻したい場合に使用</Td>
+    </tr>
+  </Tbody>
+</Table>
+
+## 2. 各メソッドの挙動の違い
+
+### `mockClear`
+- **役割**: モック関数の呼び出し履歴をクリア
+- **影響**: 関数の実装や戻り値の設定には影響しない
+- **主な用途**: 同じモックを複数のテストで使う際に呼び出し履歴だけをリセットしたい場合
+
+### `mockReset`
+- **役割**: 呼び出し履歴とともにモック関数の実装や戻り値のリセットも行う
+- **影響**: `mockImplementation`などで設定した実装もクリアされる
+- **主な用途**: 完全に初期状態に戻し、別のテストで異なる実装を設定したい場合
+
+### `mockRestore`
+- **役割**: `jest.spyOn`で設定した関数を元の実装に戻す
+- **影響**: モジュールのオリジナルの実装を元に戻し、テスト終了後に元の動作に復元
+- **主な用途**: オリジナルの実装を一時的にモックしてテストを行い、テスト後に戻したい場合
+
+## 3. 具体例
+
+### `mockClear`の使用例
+```javascript
+const myMock = jest.fn();
+myMock('first call');
+myMock.mockClear();
+console.log(myMock.mock.calls.length); // 出力: 0
+```
+
+### `mockReset`の使用例
+```javascript
+const myMock = jest.fn().mockReturnValue('initial value');
+console.log(myMock()); // 出力: 'initial value'
+myMock.mockReset();
+console.log(myMock()); // 出力: undefined
+```
+
+### `mockRestore`の使用例
+```javascript
+const myFunction = jest.spyOn(myModule, 'myFunction');
+myFunction.mockImplementation(() => 'mocked value');
+console.log(myModule.myFunction()); // 出力: 'mocked value'
+myFunction.mockRestore();
+console.log(myModule.myFunction()); // オリジナルの実装に戻る
+```
+
+## 4. まとめ
+
+- `mockClear`は、呼び出し履歴だけをリセットして実装は保持したいときに使う。
+- `mockReset`は、呼び出し履歴も実装もリセットし、完全に初期状態に戻したいときに使用。
+- `mockRestore`は、スパイを元の実装に戻し、テスト後の実装復元が必要な場合に便利。
