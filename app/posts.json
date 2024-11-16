@@ -4,11 +4,6 @@
       "id": "engineering",
       "date": "Novembar 15, 2024",
       "title": "1 人で開発すること"
-    },
-    {
-      "id": "postgres-upsert",
-      "date": "Novembar 15, 2024",
-      "title": "PostgresのUPSERT"
     }
   ]
 }
