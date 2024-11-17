@@ -1,6 +1,12 @@
 {
   "posts": [
     {
+      "id": "bad-habit",
+      "date": "2024-11-16",
+      "title": "悪い癖",
+      "tags": ["programming"]
+    },
+    {
       "id": "engineering",
       "date": "2024-11-15",
       "title": "1 人で開発すること",
