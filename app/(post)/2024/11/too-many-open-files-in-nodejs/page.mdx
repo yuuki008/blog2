@@ -1,0 +1,90 @@
+## Node.js で 「EMFILE: too many open files」エラーが発生
+
+```base
+n8n:dev: [Node]  ›   Error: command start not found
+n8n:dev: [Node] [nodemon] app crashed - waiting for file changes before starting...
+n8n-core:dev:
+n8n-core:dev: 9:34:06 AM - Found 0 errors. Watching for file changes.
+n8n-node-dev:dev: [9:34:06 AM] Found 0 errors. Watching for file changes.
+n8n-node-dev:dev:
+n8n-nodes-base:dev:
+n8n-nodes-base:dev: 9:34:14 AM - Found 0 errors. Watching for file changes.
+n8n:dev: [Node] [nodemon] Internal watch failed: EMFILE: too many open files, watch
+n8n:dev: [Node] nodemon exited with code 1
+n8n:dev: --> Sending SIGTERM to other processes..
+n8n:dev: [TypeScript] npm run watch exited with code 0
+n8n:dev:  ELIFECYCLE  Command failed with exit code 1.
+n8n:dev: ERROR: command finished with error: command (/Users/yu-home/github/sandbox/n8n/packages/cli) /Users/yu-home/.nodebrew/current/bin/pnpm run dev exited (1)
+@n8n/json-schema-to-zod:dev: cache bypass, force executing 9b67712966bd612c
+n8n-workflow:dev: cache bypass, force executing a823243791f69cb2
+@n8n/api-types:dev: cache bypass, force executing 82bf66e148a04869
+@n8n/n8n-nodes-langchain:dev:  ELIFECYCLE  Command failed.
+@n8n/n8n-nodes-langchain:dev:  ELIFECYCLE  Command failed.
+n8n#dev: command (/Users/yu-home/github/sandbox/n8n/packages/cli) /Users/yu-home/.nodebrew/current/bin/pnpm run dev exited (1)
+```
+
+### エラーの原因
+
+システムが許可する同時に開けるファイル数を超えてしまったために発生！！
+今回でいうとホットリロードを行う nodemon がファイルを監視しようとした際に、オープンできるファイル数が上限に達してしまった。
+
+## macOSでファイルディスクリプタの制限を増加させる手順
+
+`nodemon` の「too many open files」エラーを解消するために、macOSでファイルディスクリプタの制限を増やす手順を以下に示します。
+この手順は、`/etc/sysctl.conf` と `launchctl` を使用して設定を適用し、システム再起動後も有効にする方法です。
+
+### 1. **`/etc/sysctl.conf` に以下を追加**
+   ```
+   kern.maxfiles=100000
+   kern.maxfilesperproc=100000
+   ```
+
+### 2. **設定を即時適用**
+   ```bash
+   sudo sysctl -w kern.maxfiles=100000
+   sudo sysctl -w kern.maxfilesperproc=100000
+   ```
+
+### 3. **`launchctl` でファイルディスクリプタの制限を設定**
+   ```bash
+   sudo launchctl limit maxfiles 100000 100000
+   ```
+
+### 4. **永続化のために `plist` ファイルを作成**
+   - `/Library/LaunchDaemons/limit.maxfiles.plist` を作成し、以下を追加
+   ```xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+   <plist version="1.0">
+     <dict>
+       <key>Label</key>
+       <string>limit.maxfiles</string>
+       <key>ProgramArguments</key>
+       <array>
+         <string>launchctl</string>
+         <string>limit</string>
+         <string>maxfiles</string>
+         <string>100000</string>
+         <string>100000</string>
+       </array>
+       <key>RunAtLoad</key>
+       <true/>
+       <key>ServiceIPC</key>
+       <false/>
+     </dict>
+   </plist>
+   ```
+
+
+
+### 5. **システムを再起動**
+   ```bash
+   sudo reboot
+   ```
+
+### 6. **設定が正しく適用されたか確認**
+   ```bash
+   ulimit -n
+   sysctl kern.maxfiles
+   sysctl kern.maxfilesperproc
+   ```

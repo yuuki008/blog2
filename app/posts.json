@@ -35,6 +35,12 @@
       "date": "2024-02-01",
       "title": "SMS の恐ろしい仕様",
       "tags": ["sms"]
+    },
+    {
+      "id": "too-many-open-files-in-nodejs",
+      "date": "2024-11-23",
+      "title": "[nodemon] Internal watch failed: EMFILE: too many open files, watch",
+      "tags": ["nodejs", "error"]
     }
   ]
 }
