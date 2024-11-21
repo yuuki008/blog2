@@ -1,0 +1,142 @@
+export const metadata = {
+  title: '1Password CLI の使いそうなコマンド',
+  openGraph: {
+    title: '1Password CLI の使い方とコマンド一覧',
+  },
+}
+
+### 1. `op signin`
+
+**用途:** 1Password アカウントにサインインします。
+
+**使用例:**
+```bash
+op signin
+```
+
+### 2. `op signout`
+
+**用途:** 現在のセッションを終了します。
+
+**使用例:**
+```bash
+op signout
+```
+
+### 3. `op list vaults`
+
+**用途:** 利用可能なボールト（保管庫）の一覧を表示します。
+
+**使用例:**
+```bash
+op list vaults
+```
+
+### 4. `op list items`
+
+**用途:** 指定したボールト内のアイテム一覧を表示します。
+
+**使用例:**
+```bash
+op list items --vault "Personal"
+```
+
+### 5. `op get item`
+
+**用途:** 指定したアイテムの詳細情報を取得します。
+
+**使用例:**
+```bash
+op get item "My Login"
+```
+
+### 6. `op create item`
+
+**用途:** 新しいアイテムを作成します。
+
+**使用例:**
+```bash
+op create item login title="New Login" vault="Personal" \
+    username="user@example.com" password="P@ssw0rd!"
+```
+
+### 7. `op edit item`
+
+**用途:** 既存のアイテムを編集します。
+
+**使用例:**
+```bash
+op edit item "My Login" --field password="N3wP@ssw0rd!"
+```
+
+### 8. `op delete item`
+
+**用途:** 指定したアイテムを削除します。
+
+**使用例:**
+```bash
+op delete item "Old Login"
+```
+
+### 9. `op template`
+
+**用途:** アイテムのテンプレートを表示します。新しいアイテム作成時に参考にできます。
+
+**使用例:**
+```bash
+op template item login
+```
+
+### 10. `op export`
+
+**用途:** データをエクスポートします（注意: セキュリティ上の理由から慎重に使用してください）。
+
+**使用例:**
+```bash
+op export all --format csv > 1password_export.csv
+```
+
+## 実用的な使用例
+
+### パスワードの取得と利用
+
+例えば、スクリプト内で特定のサービスのパスワードを取得して環境変数に設定する場合：
+
+```bash
+export DB_PASSWORD=$(op get item "Database Credentials" --fields label=password)
+```
+
+### 新しいログイン情報の追加
+
+新しいサービスのログイン情報を追加する場合：
+
+```bash
+op create item login title="GitHub" vault="Work" \
+    username="your-username" password="your-password" \
+    url="https://github.com"
+```
+
+### 環境変数の自動設定
+
+特定のプロジェクトで必要な環境変数を自動的に設定するスクリプト：
+
+```bash
+#!/bin/bash
+
+# サインイン（セッションが有効でない場合）
+if ! op account show > /dev/null 2>&1; then
+    eval $(op signin)
+fi
+
+# 環境変数の設定
+export API_KEY=$(op get item "API Credentials" --fields label=api_key)
+export API_SECRET=$(op get item "API Credentials" --fields label=api_secret)
+
+echo "環境変数が設定されました。"
+```
+
+---
+
+**参考リンク:**
+- [1Password CLI 公式ドキュメント](https://support.1password.com/command-line/)
+- [1Password CLI GitHub リポジトリ](https://github.com/1Password/op)

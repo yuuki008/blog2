@@ -1,6 +1,12 @@
 {
   "posts": [
     {
+      "id": "one-password",
+      "date": "2024-11-25",
+      "title": "1Password CLI の使い方とコマンド一覧",
+      "tags": ["1password", "cli"]
+    },
+    {
       "id": "bad-habit",
       "date": "2024-11-16",
       "title": "悪い癖",
